@@ -177,14 +177,12 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const UtilisateurOrderByRelevanceFieldEnum = {
-  nom: 'nom',
-  prenom: 'prenom',
-  email: 'email',
-  password: 'password'
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
 } as const
 
-export type UtilisateurOrderByRelevanceFieldEnum = (typeof UtilisateurOrderByRelevanceFieldEnum)[keyof typeof UtilisateurOrderByRelevanceFieldEnum]
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const NullsOrder = {
@@ -193,70 +191,4 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const ProfileOrderByRelevanceFieldEnum = {
-  bio: 'bio',
-  url_localphoto: 'url_localphoto',
-  url_cloud: 'url_cloud',
-  photo: 'photo',
-  titre: 'titre',
-  linkedin: 'linkedin',
-  github: 'github',
-  portfolioUrl: 'portfolioUrl'
-} as const
-
-export type ProfileOrderByRelevanceFieldEnum = (typeof ProfileOrderByRelevanceFieldEnum)[keyof typeof ProfileOrderByRelevanceFieldEnum]
-
-
-export const CompetenceOrderByRelevanceFieldEnum = {
-  nom: 'nom',
-  niveau: 'niveau',
-  url_photo: 'url_photo'
-} as const
-
-export type CompetenceOrderByRelevanceFieldEnum = (typeof CompetenceOrderByRelevanceFieldEnum)[keyof typeof CompetenceOrderByRelevanceFieldEnum]
-
-
-export const TypeCompetenceOrderByRelevanceFieldEnum = {
-  nom: 'nom'
-} as const
-
-export type TypeCompetenceOrderByRelevanceFieldEnum = (typeof TypeCompetenceOrderByRelevanceFieldEnum)[keyof typeof TypeCompetenceOrderByRelevanceFieldEnum]
-
-
-export const ExperienceOrderByRelevanceFieldEnum = {
-  titre: 'titre',
-  entreprise: 'entreprise',
-  description: 'description',
-  url_photo: 'url_photo'
-} as const
-
-export type ExperienceOrderByRelevanceFieldEnum = (typeof ExperienceOrderByRelevanceFieldEnum)[keyof typeof ExperienceOrderByRelevanceFieldEnum]
-
-
-export const ProjetOrderByRelevanceFieldEnum = {
-  titre: 'titre',
-  description: 'description',
-  url_git_back: 'url_git_back',
-  url_git_front: 'url_git_front',
-  url_localphoto: 'url_localphoto',
-  url_cloud: 'url_cloud'
-} as const
-
-export type ProjetOrderByRelevanceFieldEnum = (typeof ProjetOrderByRelevanceFieldEnum)[keyof typeof ProjetOrderByRelevanceFieldEnum]
-
-
-export const CategorieProjetOrderByRelevanceFieldEnum = {
-  nom: 'nom'
-} as const
-
-export type CategorieProjetOrderByRelevanceFieldEnum = (typeof CategorieProjetOrderByRelevanceFieldEnum)[keyof typeof CategorieProjetOrderByRelevanceFieldEnum]
-
-
-export const TagOrderByRelevanceFieldEnum = {
-  nom: 'nom'
-} as const
-
-export type TagOrderByRelevanceFieldEnum = (typeof TagOrderByRelevanceFieldEnum)[keyof typeof TagOrderByRelevanceFieldEnum]
 

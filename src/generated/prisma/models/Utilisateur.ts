@@ -232,7 +232,6 @@ export type UtilisateurOrderByWithRelationInput = {
   competences?: Prisma.CompetenceOrderByRelationAggregateInput
   experiences?: Prisma.ExperienceOrderByRelationAggregateInput
   projets?: Prisma.ProjetOrderByRelationAggregateInput
-  _relevance?: Prisma.UtilisateurOrderByRelevanceInput
 }
 
 export type UtilisateurWhereUniqueInput = Prisma.AtLeast<{
@@ -341,12 +340,6 @@ export type UtilisateurUncheckedUpdateManyInput = {
   prenom?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type UtilisateurOrderByRelevanceInput = {
-  fields: Prisma.UtilisateurOrderByRelevanceFieldEnum | Prisma.UtilisateurOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type UtilisateurCountOrderByAggregateInput = {
@@ -748,7 +741,21 @@ export type UtilisateurSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   _count?: boolean | Prisma.UtilisateurCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["utilisateur"]>
 
+export type UtilisateurSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  nom?: boolean
+  prenom?: boolean
+  email?: boolean
+  password?: boolean
+}, ExtArgs["result"]["utilisateur"]>
 
+export type UtilisateurSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  nom?: boolean
+  prenom?: boolean
+  email?: boolean
+  password?: boolean
+}, ExtArgs["result"]["utilisateur"]>
 
 export type UtilisateurSelectScalar = {
   id?: boolean
@@ -766,6 +773,8 @@ export type UtilisateurInclude<ExtArgs extends runtime.Types.Extensions.Internal
   projets?: boolean | Prisma.Utilisateur$projetsArgs<ExtArgs>
   _count?: boolean | Prisma.UtilisateurCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type UtilisateurIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UtilisateurIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UtilisateurPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Utilisateur"
@@ -899,6 +908,30 @@ export interface UtilisateurDelegate<ExtArgs extends runtime.Types.Extensions.In
   createMany<T extends UtilisateurCreateManyArgs>(args?: Prisma.SelectSubset<T, UtilisateurCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Utilisateurs and returns the data saved in the database.
+   * @param {UtilisateurCreateManyAndReturnArgs} args - Arguments to create many Utilisateurs.
+   * @example
+   * // Create many Utilisateurs
+   * const utilisateur = await prisma.utilisateur.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Utilisateurs and only return the `id`
+   * const utilisateurWithIdOnly = await prisma.utilisateur.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends UtilisateurCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, UtilisateurCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UtilisateurPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Utilisateur.
    * @param {UtilisateurDeleteArgs} args - Arguments to delete one Utilisateur.
    * @example
@@ -961,6 +994,36 @@ export interface UtilisateurDelegate<ExtArgs extends runtime.Types.Extensions.In
    * 
    */
   updateMany<T extends UtilisateurUpdateManyArgs>(args: Prisma.SelectSubset<T, UtilisateurUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Utilisateurs and returns the data updated in the database.
+   * @param {UtilisateurUpdateManyAndReturnArgs} args - Arguments to update many Utilisateurs.
+   * @example
+   * // Update many Utilisateurs
+   * const utilisateur = await prisma.utilisateur.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Utilisateurs and only return the `id`
+   * const utilisateurWithIdOnly = await prisma.utilisateur.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends UtilisateurUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, UtilisateurUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UtilisateurPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Utilisateur.
@@ -1397,6 +1460,25 @@ export type UtilisateurCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
+ * Utilisateur createManyAndReturn
+ */
+export type UtilisateurCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Utilisateur
+   */
+  select?: Prisma.UtilisateurSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Utilisateur
+   */
+  omit?: Prisma.UtilisateurOmit<ExtArgs> | null
+  /**
+   * The data used to create many Utilisateurs.
+   */
+  data: Prisma.UtilisateurCreateManyInput | Prisma.UtilisateurCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Utilisateur update
  */
 export type UtilisateurUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1426,6 +1508,32 @@ export type UtilisateurUpdateArgs<ExtArgs extends runtime.Types.Extensions.Inter
  * Utilisateur updateMany
  */
 export type UtilisateurUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Utilisateurs.
+   */
+  data: Prisma.XOR<Prisma.UtilisateurUpdateManyMutationInput, Prisma.UtilisateurUncheckedUpdateManyInput>
+  /**
+   * Filter which Utilisateurs to update
+   */
+  where?: Prisma.UtilisateurWhereInput
+  /**
+   * Limit how many Utilisateurs to update.
+   */
+  limit?: number
+}
+
+/**
+ * Utilisateur updateManyAndReturn
+ */
+export type UtilisateurUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Utilisateur
+   */
+  select?: Prisma.UtilisateurSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Utilisateur
+   */
+  omit?: Prisma.UtilisateurOmit<ExtArgs> | null
   /**
    * The data used to update Utilisateurs.
    */

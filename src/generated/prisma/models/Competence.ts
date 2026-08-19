@@ -247,7 +247,6 @@ export type CompetenceOrderByWithRelationInput = {
   utilisateur?: Prisma.UtilisateurOrderByWithRelationInput
   type?: Prisma.TypeCompetenceOrderByWithRelationInput
   projets?: Prisma.ProjetOrderByRelationAggregateInput
-  _relevance?: Prisma.CompetenceOrderByRelevanceInput
 }
 
 export type CompetenceWhereUniqueInput = Prisma.AtLeast<{
@@ -361,12 +360,6 @@ export type CompetenceListRelationFilter = {
 
 export type CompetenceOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type CompetenceOrderByRelevanceInput = {
-  fields: Prisma.CompetenceOrderByRelevanceFieldEnum | Prisma.CompetenceOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type CompetenceCountOrderByAggregateInput = {
@@ -810,7 +803,27 @@ export type CompetenceSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   _count?: boolean | Prisma.CompetenceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["competence"]>
 
+export type CompetenceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  nom?: boolean
+  niveau?: boolean
+  url_photo?: boolean
+  utilisateurId?: boolean
+  typeId?: boolean
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
+  type?: boolean | Prisma.Competence$typeArgs<ExtArgs>
+}, ExtArgs["result"]["competence"]>
 
+export type CompetenceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  nom?: boolean
+  niveau?: boolean
+  url_photo?: boolean
+  utilisateurId?: boolean
+  typeId?: boolean
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
+  type?: boolean | Prisma.Competence$typeArgs<ExtArgs>
+}, ExtArgs["result"]["competence"]>
 
 export type CompetenceSelectScalar = {
   id?: boolean
@@ -827,6 +840,14 @@ export type CompetenceInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   type?: boolean | Prisma.Competence$typeArgs<ExtArgs>
   projets?: boolean | Prisma.Competence$projetsArgs<ExtArgs>
   _count?: boolean | Prisma.CompetenceCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type CompetenceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
+  type?: boolean | Prisma.Competence$typeArgs<ExtArgs>
+}
+export type CompetenceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
+  type?: boolean | Prisma.Competence$typeArgs<ExtArgs>
 }
 
 export type $CompetencePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -961,6 +982,30 @@ export interface CompetenceDelegate<ExtArgs extends runtime.Types.Extensions.Int
   createMany<T extends CompetenceCreateManyArgs>(args?: Prisma.SelectSubset<T, CompetenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Competences and returns the data saved in the database.
+   * @param {CompetenceCreateManyAndReturnArgs} args - Arguments to create many Competences.
+   * @example
+   * // Create many Competences
+   * const competence = await prisma.competence.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Competences and only return the `id`
+   * const competenceWithIdOnly = await prisma.competence.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends CompetenceCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, CompetenceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompetencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Competence.
    * @param {CompetenceDeleteArgs} args - Arguments to delete one Competence.
    * @example
@@ -1023,6 +1068,36 @@ export interface CompetenceDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * 
    */
   updateMany<T extends CompetenceUpdateManyArgs>(args: Prisma.SelectSubset<T, CompetenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Competences and returns the data updated in the database.
+   * @param {CompetenceUpdateManyAndReturnArgs} args - Arguments to update many Competences.
+   * @example
+   * // Update many Competences
+   * const competence = await prisma.competence.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Competences and only return the `id`
+   * const competenceWithIdOnly = await prisma.competence.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends CompetenceUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, CompetenceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompetencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Competence.
@@ -1459,6 +1534,29 @@ export type CompetenceCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * Competence createManyAndReturn
+ */
+export type CompetenceCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Competence
+   */
+  select?: Prisma.CompetenceSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Competence
+   */
+  omit?: Prisma.CompetenceOmit<ExtArgs> | null
+  /**
+   * The data used to create many Competences.
+   */
+  data: Prisma.CompetenceCreateManyInput | Prisma.CompetenceCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompetenceIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * Competence update
  */
 export type CompetenceUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1500,6 +1598,36 @@ export type CompetenceUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Competences to update.
    */
   limit?: number
+}
+
+/**
+ * Competence updateManyAndReturn
+ */
+export type CompetenceUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Competence
+   */
+  select?: Prisma.CompetenceSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Competence
+   */
+  omit?: Prisma.CompetenceOmit<ExtArgs> | null
+  /**
+   * The data used to update Competences.
+   */
+  data: Prisma.XOR<Prisma.CompetenceUpdateManyMutationInput, Prisma.CompetenceUncheckedUpdateManyInput>
+  /**
+   * Filter which Competences to update
+   */
+  where?: Prisma.CompetenceWhereInput
+  /**
+   * Limit how many Competences to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompetenceIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

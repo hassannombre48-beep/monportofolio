@@ -21,6 +21,7 @@
   "description": "",
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.9.1",
+    "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "aws-sdk": "^2.1693.0",
     "bcrypt": "^6.0.0",
