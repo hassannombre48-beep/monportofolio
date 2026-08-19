@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Utilisateur {
+  id          Int          @id @default(autoincrement())
+  nom         String
+  prenom      String
+  email       String       @unique
+  password    String
+  profile     Profile?
+  competences Competence[]
+  experiences Experience[]
+  projets     Projet[]
+}
+
+model Profile {
+  id             Int    @id @default(autoincrement())
+  bio            String?
+  url_localphoto String?
+  url_cloud      String?
+  photo          String?
+  titre          String?
+  linkedin       String?
+  github         String?
+  portfolioUrl   String?
+  utilisateur    Utilisateur @relation(fields: [utilisateurId], references: [id])
+  utilisateurId  Int @unique
+}
+
+model Competence {
+  id            Int         @id @default(autoincrement())
+  nom           String
+  niveau        String?
+  url_photo     String?
+  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
+  utilisateurId Int
+  type          TypeCompetence? @relation(fields: [typeId], references: [id])
+  typeId        Int?
+  projets       Projet[] @relation("ProjetCompetences")
+}
+
+model TypeCompetence {
+  id          Int          @id @default(autoincrement())
+  nom         String
+  competences Competence[]
+}
+
+model Experience {
+  id            Int         @id @default(autoincrement())
+  titre         String
+  entreprise    String?
+  description   String?
+  dateDebut     DateTime?
+  dateFin       DateTime?
+  url_photo     String?
+  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
+  utilisateurId Int
+}
+
+model Projet {
+  id             Int         @id @default(autoincrement())
+  titre          String
+  description    String?
+  url_git_back   String?
+  url_git_front  String?
+  url_localphoto String?
+  url_cloud      String?
+  utilisateur    Utilisateur @relation(fields: [utilisateurId], references: [id])
+  utilisateurId  Int
+  competences    Competence[] @relation("ProjetCompetences")
+  tags           Tag[]        @relation("ProjetTags")
+  categorieProjet CategorieProjet? @relation(fields: [categorieId], references: [id])
+  categorieId    Int?
+}
+
+model CategorieProjet {
+  id      Int      @id @default(autoincrement())
+  nom     String
+  projets Projet[]
+}
+
+model Tag {
+  id      Int      @id @default(autoincrement())
+  nom     String
+  projets Projet[] @relation("ProjetTags")
+}

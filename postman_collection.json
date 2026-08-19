@@ -1,0 +1,268 @@
+{
+  "info": {
+    "name": "MonAPI - toutes les routes",
+    "description": "Collection exhaustive des modules de route présents dans le projet. Certaines routes ne sont pas montées dans app.ts, mais elles existent dans les fichiers route du backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "f56d4d21-78d9-46bf-a82b-81f64080d223"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "userId", "value": "", "type": "string" },
+    { "key": "projectId", "value": "", "type": "string" },
+    { "key": "competenceId", "value": "", "type": "string" },
+    { "key": "experienceId", "value": "", "type": "string" },
+    { "key": "categorieId", "value": "", "type": "string" },
+    { "key": "typeCompetenceId", "value": "", "type": "string" },
+    { "key": "tagId", "value": "", "type": "string" },
+    { "key": "titre", "value": "Mon projet", "type": "string" },
+    { "key": "nom", "value": "JavaScript", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "POST /api/v1/auth/register",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Doe\",\n  \"prenom\": \"John\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "v1", "auth", "register"] } },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/auth/login",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "v1", "auth", "login"] } },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/auth/refresh",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"YOUR_REFRESH_TOKEN\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/auth/refresh", "host": ["{{baseUrl}}"], "path": ["api", "v1", "auth", "refresh"] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "POST /api/v1/profile/profiles",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"bio\": \"Développeuse backend passionnée\",\n  \"ville\": \"Paris\",\n  \"linkedin\": \"https://linkedin.com/in/example\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/profile/profiles", "host": ["{{baseUrl}}"], "path": ["api", "v1", "profile", "profiles"] } },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/profile/profiles/:userId",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/profile/profiles/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "profile", "profiles", "{{userId}}"] } },
+          "response": []
+        },
+        {
+          "name": "PUT /api/v1/profile/profiles/:userId",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"bio\": \"Profil mis à jour\",\n  \"ville\": \"Lyon\",\n  \"linkedin\": \"https://linkedin.com/in/updated\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/profile/profiles/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "profile", "profiles", "{{userId}}"] } },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/v1/profile/profiles/:userId",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/profile/profiles/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "profile", "profiles", "{{userId}}"] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Competences",
+      "item": [
+        {
+          "name": "GET /api/v1/competences/competences",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/competences/competences", "host": ["{{baseUrl}}"], "path": ["api", "v1", "competences", "competences"] } },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/competences/competences",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"TypeScript\",\n  \"description\": \"Langage de programmation\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/competences/competences", "host": ["{{baseUrl}}"], "path": ["api", "v1", "competences", "competences"] } },
+          "response": []
+        },
+        {
+          "name": "PUT /api/v1/competences/competences/:id",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Node.js\",\n  \"description\": \"Runtime JavaScript\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/competences/competences/{{competenceId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "competences", "competences", "{{competenceId}}"] } },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/v1/competences/competences/:id",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/competences/competences/{{competenceId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "competences", "competences", "{{competenceId}}"] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Experiences",
+      "item": [
+        {
+          "name": "GET /api/v1/experiences/experiences",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/experiences/experiences", "host": ["{{baseUrl}}"], "path": ["api", "v1", "experiences", "experiences"] } },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/experiences/experiences",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"titre\": \"Développeuse Fullstack\",\n  \"entreprise\": \"MonEntreprise\",\n  \"dateDebut\": \"2024-01-01\",\n  \"dateFin\": \"2025-01-01\",\n  \"description\": \"Développement d'API backend et frontend\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/experiences/experiences", "host": ["{{baseUrl}}"], "path": ["api", "v1", "experiences", "experiences"] } },
+          "response": []
+        },
+        {
+          "name": "PUT /api/v1/experiences/experiences/:id",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"titre\": \"Lead développeuse backend\",\n  \"entreprise\": \"MonEntreprise\",\n  \"dateDebut\": \"2023-01-01\",\n  \"dateFin\": \"2025-12-31\",\n  \"description\": \"Pilotage du développement backend\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/experiences/experiences/{{experienceId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "experiences", "experiences", "{{experienceId}}"] } },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/v1/experiences/experiences/:id",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/experiences/experiences/{{experienceId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "experiences", "experiences", "{{experienceId}}"] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Projets",
+      "item": [
+        {
+          "name": "GET /api/v1/projet/projet",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/projet/projet", "host": ["{{baseUrl}}"], "path": ["api", "v1", "projet", "projet"] } },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/projet/projet",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"titre\": \"Mon projet\",\n  \"description\": \"Application de gestion de portfolio\",\n  \"technologies\": [\"Node.js\", \"Express\"],\n  \"lien\": \"https://example.com\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/projet/projet", "host": ["{{baseUrl}}"], "path": ["api", "v1", "projet", "projet"] } },
+          "response": []
+        },
+        {
+          "name": "PUT /api/v1/projet/projet/:id",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"titre\": \"Projet mis à jour\",\n  \"description\": \"Projet amélioré\",\n  \"technologies\": [\"Node.js\", \"Prisma\"],\n  \"lien\": \"https://example.com/updated\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/projet/projet/{{projectId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "projet", "projet", "{{projectId}}"] } },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/v1/projet/projet/:id",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/projet/projet/{{projectId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "projet", "projet", "{{projectId}}"] } },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/projet/projet/:titre",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/projet/projet/{{titre}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "projet", "projet", "{{titre}}"] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Utilisateurs",
+      "item": [
+        {
+          "name": "POST /api/v1/users",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Doe\",\n  \"prenom\": \"John\",\n  \"email\": \"john.doe@example.com\",\n  \"role\": \"user\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/users", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users"] } },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/users/:id",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "{{userId}}"] } },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/users/",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/users/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", ""] } },
+          "response": []
+        },
+        {
+          "name": "PUT /api/v1/users/:id",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Doe\",\n  \"prenom\": \"Johnny\",\n  \"email\": \"johnny.doe@example.com\"\n}" }, "url": { "raw": "{{baseUrl}}/api/v1/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "{{userId}}"] } },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/v1/users/:id",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/api/v1/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "{{userId}}"] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "TypeCompetence",
+      "item": [
+        {
+          "name": "POST /typecompetence",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Frontend\"\n}" }, "url": { "raw": "{{baseUrl}}/typecompetence", "host": ["{{baseUrl}}"], "path": ["typecompetence"] } },
+          "response": []
+        },
+        {
+          "name": "GET /typecompetence",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/typecompetence", "host": ["{{baseUrl}}"], "path": ["typecompetence"] } },
+          "response": []
+        },
+        {
+          "name": "GET /with-competences",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/with-competences", "host": ["{{baseUrl}}"], "path": ["with-competences"] } },
+          "response": []
+        },
+        {
+          "name": "PUT /typecompetence:id",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Backend\"\n}" }, "url": { "raw": "{{baseUrl}}/typecompetence{{typeCompetenceId}}", "host": ["{{baseUrl}}"], "path": ["typecompetence{{typeCompetenceId}}"] } },
+          "response": []
+        },
+        {
+          "name": "GET /name/:nom",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/name/{{nom}}", "host": ["{{baseUrl}}"], "path": ["name", "{{nom}}"] } },
+          "response": []
+        },
+        {
+          "name": "DELETE /typecompetence:id",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/typecompetence{{typeCompetenceId}}", "host": ["{{baseUrl}}"], "path": ["typecompetence{{typeCompetenceId}}"] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tag",
+      "item": [
+        {
+          "name": "POST /tag",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Node\"\n}" }, "url": { "raw": "{{baseUrl}}/tag", "host": ["{{baseUrl}}"], "path": ["tag"] } },
+          "response": []
+        },
+        {
+          "name": "GET /tag",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/tag", "host": ["{{baseUrl}}"], "path": ["tag"] } },
+          "response": []
+        },
+        {
+          "name": "PUT /tage:id",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Express\"\n}" }, "url": { "raw": "{{baseUrl}}/tage{{tagId}}", "host": ["{{baseUrl}}"], "path": ["tage{{tagId}}"] } },
+          "response": []
+        },
+        {
+          "name": "DELETE /tag:id",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/tag{{tagId}}", "host": ["{{baseUrl}}"], "path": ["tag{{tagId}}"] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CategorieProjet",
+      "item": [
+        {
+          "name": "POST /createcategories/",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Portfolio\"\n}" }, "url": { "raw": "{{baseUrl}}/createcategories/", "host": ["{{baseUrl}}"], "path": ["createcategories", ""] } },
+          "response": []
+        },
+        {
+          "name": "GET /createcategories/",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/createcategories/", "host": ["{{baseUrl}}"], "path": ["createcategories", ""] } },
+          "response": []
+        },
+        {
+          "name": "GET /createcategories/:id/projets",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/createcategories/{{categorieId}}/projets", "host": ["{{baseUrl}}"], "path": ["createcategories", "{{categorieId}}", "projets"] } },
+          "response": []
+        },
+        {
+          "name": "PUT /createcategories/:id",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nom\": \"Portfolio 2\"\n}" }, "url": { "raw": "{{baseUrl}}/createcategories/{{categorieId}}", "host": ["{{baseUrl}}"], "path": ["createcategories", "{{categorieId}}"] } },
+          "response": []
+        },
+        {
+          "name": "DELETE /createcategories/:id",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/createcategories/{{categorieId}}", "host": ["{{baseUrl}}"], "path": ["createcategories", "{{categorieId}}"] } },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

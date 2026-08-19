@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",              // Version JS générée
+    "module": "commonjs",            // Type de module (Node.js classique)
+    "rootDir": "./src",              // Dossier source
+    "outDir": "./dist",              // Dossier de sortie compilé
+    "strict": true,                  // Vérifications strictes
+    "esModuleInterop": true,         // Compatibilité import/export
+    "skipLibCheck": true             // Ignore les types des libs externes
+  },
+  "include": ["src/**/*.ts"]         // Tous les fichiers TS dans src/
+}
