@@ -2,90 +2,195 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import Redis from "ioredis";
+import { logger } from "../config/logger";
+
+// ============================================================
+// 📁 Configuration du dossier des fichiers
+// ============================================================
 
 const UPLOAD_DIR = path.join(__dirname, "../../uploads");
 
-// 🔹 Initialisation Redis
+// ============================================================
+// 🔴 Initialisation Redis
+// ============================================================
 
-const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
+const redisUrl = process.env.REDIS_URL;
+
+if (!redisUrl) {
+  throw new Error("❌ REDIS_URL n'est pas définie");
+}
+
+const redis = new Redis(redisUrl);
 
 redis.on("connect", () => {
-  console.log("✅ Redis connecté");
+  logger.info("✅ Redis connecté");
+});
+
+redis.on("ready", () => {
+  logger.info("✅ Redis prêt");
 });
 
 redis.on("error", (err) => {
-  console.error("❌ Erreur Redis", err);
+  logger.error(`❌ Erreur Redis : ${err.message}`);
 });
 
+redis.on("close", () => {
+  logger.warn("⚠️ Connexion Redis fermée");
+});
 
-// Vérifie si le dossier local existe
+// ============================================================
+// 📁 Création du dossier uploads
+// ============================================================
+
 if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
 
-/**
- * Génère un nom unique pour le fichier
- */
+// ============================================================
+// 🔐 Génération d'un nom de fichier unique
+// ============================================================
+
 export const generateFileName = (originalName: string): string => {
   const ext = path.extname(originalName);
-  const unique = crypto.randomBytes(16).toString("hex");
+
+  const unique = crypto
+    .randomBytes(16)
+    .toString("hex");
+
   return `${unique}${ext}`;
 };
 
-/**
- * Enregistre un fichier en local
- * Retourne l’URL locale et met en cache Redis
- */
+// ============================================================
+// 📤 Enregistrer un fichier
+// ============================================================
+
 export const saveFile = async (
   buffer: Buffer,
   originalName: string
 ): Promise<{ localUrl: string }> => {
   const fileName = generateFileName(originalName);
-  const localPath = path.join(UPLOAD_DIR, fileName);
 
-  // 🔹 Sauvegarde locale
+  const localPath = path.join(
+    UPLOAD_DIR,
+    fileName
+  );
+
+  // Sauvegarde locale
   fs.writeFileSync(localPath, buffer);
+
   const localUrl = `/uploads/${fileName}`;
 
-  // 🔹 Cache Redis (URL locale)
-  await redis.set(`file:${fileName}`, localUrl, "EX", 3600);
+  // Mise en cache Redis
+  try {
+    await redis.set(
+      `file:${fileName}`,
+      localUrl,
+      "EX",
+      3600
+    );
+  } catch (error) {
+    logger.error(
+      `❌ Erreur lors de l'enregistrement Redis : ${error}`
+    );
+  }
 
-  return { localUrl };
+  return {
+    localUrl,
+  };
 };
 
-/**
- * Récupère un fichier (cache Redis → local)
- */
+// ============================================================
+// 📥 Récupérer un fichier
+// ============================================================
+
 export const getFile = async (
   fileName: string
-): Promise<{ buffer?: Buffer; url?: string } | null> => {
-  const localPath = path.join(UPLOAD_DIR, fileName);
+): Promise<{
+  buffer?: Buffer;
+  url?: string;
+} | null> => {
 
-  // 1️⃣ Vérifie en cache Redis
-  const cachedUrl = await redis.get(`file:${fileName}`);
-  if (cachedUrl) {
-    return { url: cachedUrl };
+  const localPath = path.join(
+    UPLOAD_DIR,
+    fileName
+  );
+
+  // ----------------------------------------------------------
+  // 1️⃣ Vérifier Redis
+  // ----------------------------------------------------------
+
+  try {
+    const cachedUrl = await redis.get(
+      `file:${fileName}`
+    );
+
+    if (cachedUrl) {
+      return {
+        url: cachedUrl,
+      };
+    }
+  } catch (error) {
+    logger.error(
+      `❌ Erreur lecture Redis : ${error}`
+    );
   }
 
-  // 2️⃣ Vérifie en local
+  // ----------------------------------------------------------
+  // 2️⃣ Vérifier le stockage local
+  // ----------------------------------------------------------
+
   if (fs.existsSync(localPath)) {
-    return { buffer: fs.readFileSync(localPath), url: `/uploads/${fileName}` };
+    return {
+      buffer: fs.readFileSync(localPath),
+      url: `/uploads/${fileName}`,
+    };
   }
+
+  // ----------------------------------------------------------
+  // 3️⃣ Fichier introuvable
+  // ----------------------------------------------------------
 
   return null;
 };
 
-/**
- * Supprime un fichier en local et du cache Redis
- */
-export const deleteFile = async (fileName: string): Promise<void> => {
-  const localPath = path.join(UPLOAD_DIR, fileName);
+// ============================================================
+// 🗑️ Supprimer un fichier
+// ============================================================
 
-  // 🔹 Supprime en local
+export const deleteFile = async (
+  fileName: string
+): Promise<void> => {
+
+  const localPath = path.join(
+    UPLOAD_DIR,
+    fileName
+  );
+
+  // ----------------------------------------------------------
+  // Supprimer le fichier local
+  // ----------------------------------------------------------
+
   if (fs.existsSync(localPath)) {
     fs.unlinkSync(localPath);
   }
 
-  // 🔹 Supprime du cache Redis
-  await redis.del(`file:${fileName}`);
+  // ----------------------------------------------------------
+  // Supprimer le cache Redis
+  // ----------------------------------------------------------
+
+  try {
+    await redis.del(
+      `file:${fileName}`
+    );
+  } catch (error) {
+    logger.error(
+      `❌ Erreur suppression Redis : ${error}`
+    );
+  }
 };
+
+// ============================================================
+// 🔌 Export Redis si nécessaire ailleurs
+// ============================================================
+
+export { redis };
