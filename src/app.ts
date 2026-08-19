@@ -19,7 +19,6 @@ app.use(express.json());
 applySecurity(app);
 
 // 🔹 Limitation des requêtes
-app.use(rateLimiter);
 
 // 🔹 Rendre le dossier uploads accessible
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));

@@ -5,25 +5,36 @@ import { Application } from "express";
 
 // 🔹 Fonction pour appliquer les règles de sécurité
 export function applySecurity(app: Application) {
-  // Helmet → ajoute des headers de sécurité (XSS, clickjacking, etc.)
+  // Render est derrière un reverse proxy
+  app.set("trust proxy", 1);
+
+  // Helmet → headers de sécurité
   app.use(helmet());
 
-  // CORS → autorise les requêtes depuis certains domaines
-  app.use(cors({
-    origin: ["http://localhost:3000"], // Front autorisé
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-  }));
+  // CORS
+  app.use(
+    cors({
+      origin: [
+        "http://localhost:3000",
+        // Ajoute ici ton frontend quand il sera déployé
+        // "https://ton-frontend.onrender.com"
+      ],
+      methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+      credentials: true,
+    })
+  );
 
-  // Rate limiting → limite le nombre de requêtes par IP
+  // Rate limiting global
   const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // 100 requêtes max par IP
-    message: "Trop de requêtes, réessayez plus tard."
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+      success: false,
+      message: "Trop de requêtes, réessayez plus tard.",
+    },
   });
+
   app.use(limiter);
 }
-
-// Exemple d’utilisation dans app.ts :
-// import { applySecurity } from "./config/security";
-// applySecurity(app);
