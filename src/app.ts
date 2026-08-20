@@ -15,6 +15,15 @@ const app = express();
 // 🔹 Middleware global
 app.use(express.json());
 
+
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    status: "ok",
+    message: "API opérationnelle"
+  });
+});
 // 🔹 Sécurité globale
 applySecurity(app);
 
