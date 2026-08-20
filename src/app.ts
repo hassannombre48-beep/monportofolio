@@ -37,16 +37,16 @@ app.use("/api/v1/auth", authRoutes);
 
 
 // Routes profil (protégées)
-app.use("/api/v1/profile", authMiddleware, profileRoutes);
+app.use("/api/v1/profile", profileRoutes);
 
 // Routes compétences (protégées)
-app.use("/api/v1/competences", authMiddleware, competenceRoutes);
+app.use("/api/v1/competences", competenceRoutes);
 
 // Routes expériences (protégées)
-app.use("/api/v1/experiences", authMiddleware, experienceRoutes);
+app.use("/api/v1/experiences", experienceRoutes);
 
 // Routes protégées (nécessitent un token valide)
-app.use("/api/v1/projet", authMiddleware, projetRoutes);
+app.use("/api/v1/projet", projetRoutes);
 // 🔹 Gestion des erreurs
 app.use(errorMiddleware);
 
