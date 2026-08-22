@@ -15,7 +15,7 @@ export function applySecurity(app: Application) {
   app.use(
     cors({
       origin: [
-        "http://localhost:3000",
+        "http://localhost:5173",
         // Ajoute ici ton frontend quand il sera déployé
         // "https://ton-frontend.onrender.com"
       ],
