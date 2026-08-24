@@ -9,7 +9,13 @@ export function applySecurity(app: Application) {
   app.set("trust proxy", 1);
 
   // Helmet → headers de sécurité
-  app.use(helmet());
+ app.use(
+  helmet({
+    crossOriginResourcePolicy: {
+      policy: "cross-origin",
+    },
+  })
+);
 
   // CORS
   app.use(
