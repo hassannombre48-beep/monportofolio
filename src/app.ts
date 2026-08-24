@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 
-
+applySecurity(app);
 app.get("/health", (req, res) => {
   res.status(200).json({
     success: true,
@@ -25,7 +25,7 @@ app.get("/health", (req, res) => {
   });
 });
 // 🔹 Sécurité globale
-applySecurity(app);
+
 
 // 🔹 Limitation des requêtes
 
