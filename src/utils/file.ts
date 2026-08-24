@@ -46,40 +46,18 @@ export const saveFile = async (
 };
 
 // ✅ Récupère un fichier
-export const getFile = async (
-  fileName: string
-): Promise<{ buffer?: Buffer; url?: string } | null> => {
-  try {
-    const localPath = path.join(UPLOAD_DIR, fileName);
+export const getFile = async (fileName: string): Promise<{ url?: string } | null> => {
+  if (!fileName) return null;
 
-    // Vérifie en cache Redis
-    try {
-      const cachedUrl = await redis.get(`file:${fileName}`);
-      if (cachedUrl) {
-        return { url: cachedUrl };
-      }
-    } catch (error) {
-      logger.error(`❌ Erreur Redis lors de la lecture : ${error}`);
-    }
+  const localPath = path.join(UPLOAD_DIR, fileName);
 
-    // Vérifie en local
-    if (fs.existsSync(localPath)) {
-      const stat = await fs.promises.stat(localPath);
-      if (stat.isDirectory()) {
-        throw new Error("EISDIR: le chemin correspond à un dossier, pas un fichier");
-      }
-
-      return {
-        buffer: await fs.promises.readFile(localPath),
-        url: `/uploads/${fileName}`,
-      };
-    }
-
-    return null;
-  } catch (error: any) {
-    throw new Error("Erreur lors de la récupération du fichier : " + error.message);
+  if (fs.existsSync(localPath)) {
+    return { url: `/uploads/${fileName}` }; // ✅ retourne l’URL publique
   }
+
+  return null;
 };
+
 
 // ✅ Supprime un fichier
 export const deleteFile = async (fileName: string): Promise<void> => {
