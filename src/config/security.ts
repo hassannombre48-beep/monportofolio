@@ -2,6 +2,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { Application } from "express";
+import { ENV } from "./env";
 
 // 🔹 Fonction pour appliquer les règles de sécurité
 export function applySecurity(app: Application) {
@@ -22,12 +23,11 @@ export function applySecurity(app: Application) {
     cors({
       origin: [
         "http://localhost:5173",
-        // Ajoute ici ton frontend quand il sera déployé
-        // "https://ton-frontend.onrender.com"
-    
         "http://127.0.0.1:5173",
+        ...(ENV.FRONTEND_URL ? [ENV.FRONTEND_URL] : []),
       ],
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+      allowedHeaders: ["Authorization", "Content-Type"],
       credentials: true,
     })
   );
