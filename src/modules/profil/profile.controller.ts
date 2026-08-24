@@ -29,6 +29,9 @@ export const createProfileController = async (req: Request, res: Response) => {
 
     return res.status(201).json({ ...profile, url_localphoto: photoUrl });
   } catch (error: any) {
+    if (error?.code === "P2025") {
+      return res.status(404).json({ error: "Profil non trouvé" });
+    }
     return res.status(400).json({ error: error.message });
   }
 };
@@ -85,6 +88,9 @@ export const updateProfileController = async (req: Request, res: Response) => {
 
     return res.status(200).json({ ...profile, url_localphoto: photoUrl });
   } catch (error: any) {
+    if (error?.code === "P2025") {
+      return res.status(404).json({ error: "Profil non trouvé" });
+    }
     return res.status(400).json({ error: error.message });
   }
 };

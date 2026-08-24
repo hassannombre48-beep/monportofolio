@@ -10,3 +10,10 @@ export const createProfileSchema = z.object({
   portfolioUrl: z.string().url().optional(),
   utilisateurId: z.number() // obligatoire pour relier au User
 });
+
+export const updateProfileSchema = createProfileSchema
+  .omit({ utilisateurId: true })
+  .partial()
+  .refine((data) => Object.keys(data).length > 0, {
+    message: "Au moins un champ doit être modifié"
+  });

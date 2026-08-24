@@ -4,8 +4,8 @@ import {
   getProjetsController,updateProjetController,
   deleteProjetController,getProjetsByTitreController
 } from "./projet.controller";
-import {projetSchema} from "./projet.schema"
-import {validateMiddleware} from "../../middlewares/validate.middleware"
+import { projetSchema } from "./projet.schema";
+import { validateMiddleware } from "../../middlewares/validate.middleware";
 import { authMiddleware } from "../../middlewares/auth.middleware";
 const router = Router();
 

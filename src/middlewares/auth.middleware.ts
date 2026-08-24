@@ -13,3 +13,14 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
   (req as any).user = decoded;
   next();
 };
+
+export const authorizeUserResource = (req: Request, res: Response, next: NextFunction) => {
+  const authenticatedUserId = Number((req as any).user?.userId);
+  const requestedUserId = Number(req.params.userId ?? req.body?.utilisateurId);
+
+  if (!Number.isInteger(authenticatedUserId) || authenticatedUserId !== requestedUserId) {
+    throw new AppError("Accès non autorisé", 403);
+  }
+
+  next();
+};

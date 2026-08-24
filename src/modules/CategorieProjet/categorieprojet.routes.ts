@@ -5,15 +5,15 @@ import {
   getProjetsByCategorieController,updateCategorieProjetController,
   deleteCategorieProjetController
 } from "./categorieprojet.controller";
-import {categorieProjetSchema} from "./categorieprojet.schema"
-import {validateMiddleware} from "../../middlewares/validate.middleware"
+import { categorieProjetSchema } from "./categorieprojet.schema";
+import { validateMiddleware } from "../../middlewares/validate.middleware";
 import { authMiddleware } from "../../middlewares/auth.middleware";
 const router = Router();
 
-router.post("createcategories/",validateMiddleware(categorieProjetSchema),authMiddleware, createCategorieProjetController);
-router.get("createcategories/", getCategoriesProjetController);
-router.get("createcategories/:id/projets", getProjetsByCategorieController);
-router.put("createcategories/:id",validateMiddleware(categorieProjetSchema) ,authMiddleware,updateCategorieProjetController);    // ✅ Modifier
-router.delete("createcategories/:id", authMiddleware,deleteCategorieProjetController); // ✅ Supprimer
+router.post("/categories", validateMiddleware(categorieProjetSchema), authMiddleware, createCategorieProjetController);
+router.get("/categories", getCategoriesProjetController);
+router.get("/categories/:id/projets", getProjetsByCategorieController);
+router.put("/categories/:id", validateMiddleware(categorieProjetSchema), authMiddleware, updateCategorieProjetController);
+router.delete("/categories/:id", authMiddleware, deleteCategorieProjetController);
 
 export default router;

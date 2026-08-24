@@ -4,8 +4,8 @@ import {
   getCompetencesController, updateCompetenceController,
   deleteCompetenceController
 } from "./competence.controller";
-import {competenceSchema} from "./competence.schema"
-import {validateMiddleware} from "../../middlewares/validate.middleware"
+import { competenceSchema } from "./competence.schema";
+import { validateMiddleware } from "../../middlewares/validate.middleware";
 import { authMiddleware } from "../../middlewares/auth.middleware";
 const router = Router();
 

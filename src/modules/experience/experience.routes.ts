@@ -4,8 +4,8 @@ import {
   getExperiencesController, updateExperienceController,
   deleteExperienceController
 } from "./experience.controller";
-import {experienceSchema} from "./experience.schema"
-import {validateMiddleware} from "../../middlewares/validate.middleware"
+import { experienceSchema } from "./experience.schema";
+import { validateMiddleware } from "../../middlewares/validate.middleware";
 import { authMiddleware } from "../../middlewares/auth.middleware";
 const router = Router();
 

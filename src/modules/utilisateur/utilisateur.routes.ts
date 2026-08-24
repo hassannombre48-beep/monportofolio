@@ -7,8 +7,8 @@ import {
   deleteUtilisateurController
 } from "./utilisateur.controller";
 import { authMiddleware } from "../../middlewares/auth.middleware";
-import {utilisateurSchema} from "./utilisateur.schema"
-import {validateMiddleware} from "../../middlewares/validate.middleware"
+import { utilisateurSchema } from "./utilisateur.schema";
+import { validateMiddleware } from "../../middlewares/validate.middleware";
 const router = Router();
 
 router.post("/users",validateMiddleware(utilisateurSchema),authMiddleware, createUtilisateurController);
