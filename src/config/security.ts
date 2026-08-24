@@ -18,6 +18,8 @@ export function applySecurity(app: Application) {
         "http://localhost:5173",
         // Ajoute ici ton frontend quand il sera déployé
         // "https://ton-frontend.onrender.com"
+    
+        "http://127.0.0.1:5173",
       ],
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
       credentials: true,
