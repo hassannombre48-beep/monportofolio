@@ -10,6 +10,8 @@ import projetRoutes from "./modules/projet/projet.routes";
 import profileRoutes from "./modules/profil/profile.routes";
 import competenceRoutes from "./modules/competence/competence.routes";
 import experienceRoutes from "./modules/experience/experience.routes";
+import typeCompetenceRoutes from "./modules/typecompetence/typecompetence.routes";
+import categorieProjetRoutes from "./modules/CategorieProjet/categorieprojet.routes";
 const app = express();
 
 // 🔹 Middleware global
@@ -44,6 +46,12 @@ app.use("/api/v1/competences", competenceRoutes);
 
 // Routes expériences (protégées)
 app.use("/api/v1/experiences", experienceRoutes);
+
+// Routes types de compétences
+app.use("/api/v1/typecompetence", typeCompetenceRoutes);
+
+// Routes catégories de projets
+app.use("/api/v1/categories", categorieProjetRoutes);
 
 // Routes protégées (nécessitent un token valide)
 app.use("/api/v1/projet", projetRoutes);
